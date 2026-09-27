@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLA University Online - MBA Operations & Supply Chain Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gla: {
+                            dark: '#063328',
+                            DEFAULT: '#0b382c',
+                            light: '#134e3e',
+                            gold: '#f59e0b',
+                            badge: '#eab308'
+                        },
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- GLA Official Branding Top Banner -->
+    <header class="bg-gla-dark text-white border-b-4 border-yellow-500 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- GLA ONLINE Logo Block -->
+            <div class="flex items-center space-x-3">
+                <!-- GLA Emblem / Crest SVG -->
+                <div class="w-12 h-12 rounded-full bg-yellow-500 border-2 border-white/80 flex items-center justify-center text-gla-dark font-extrabold shadow-inner text-xl flex-shrink-0">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                
+                <div class="flex items-center space-x-2 border-r border-white/20 pr-4">
+                    <div class="leading-tight">
+                        <span class="text-xl font-black tracking-wider font-sans">GLA</span>
+                        <span class="text-[9px] uppercase tracking-widest block font-semibold text-gray-300">UNIVERSITY</span>
+                    </div>
+                    <div class="h-8 w-px bg-white/40 mx-1"></div>
+                    <span class="text-xl font-extrabold tracking-wide text-white">ONLINE</span>
+                </div>
+                
+                <div class="hidden lg:block text-xs font-semibold text-yellow-400 italic">
+                    #GharSeGlobal
+                </div>
+            </div>
+
+            <!-- NAAC A+ Accreditation Pill Badge (From Reference Image) -->
+            <div class="flex items-center bg-yellow-500 text-gla-dark px-3.5 py-1 rounded-full font-bold text-xs tracking-tight shadow-md border border-yellow-300">
+                <span>ACCREDITED WITH</span>
+                <span class="bg-white text-gla-dark font-black px-1.5 py-0.5 rounded ml-1.5 mr-1 text-xs">A+</span>
+                <span>GRADE BY <span class="font-black">NAAC</span></span>
+            </div>
+
+            <!-- Top Controls & Student Profile Quick View -->
+            <div class="flex items-center space-x-3 text-xs">
+                <!-- Student Profile Button -->
+                <button onclick="openStudentModal()" class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-xl border border-white/20 transition">
+                    <i class="fa-solid fa-circle-user text-yellow-400 text-sm"></i>
+                    <span id="headerStudentName" class="font-medium">Set Student Name</span>
+                    <i class="fa-solid fa-pen text-[10px] text-gray-300 ml-1"></i>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-200 transition">
+                    <i class="fa-solid fa-moon text-sm" id="themeIcon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub-Header Portal Bar -->
+    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-2.5 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-xs">
+            <div class="flex items-center space-x-2">
+                <span class="bg-brand-100 text-brand-800 dark:bg-brand-900/50 dark:text-brand-300 font-bold px-2 py-0.5 rounded text-[10px] uppercase">
+                    AVAILABLE LEARNING
+                </span>
+                <span class="text-gray-500 dark:text-gray-400 font-medium hidden sm:inline">
+                    MBA Operations & Supply Chain Management Portal
+                </span>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="resetAllProgress()" class="text-red-600 hover:text-red-700 dark:text-red-400 font-medium flex items-center space-x-1">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>Reset Progress</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Welcome Student Banner & Academic Progress -->
+        <div class="bg-gradient-to-r from-gla-dark via-gla to-brand-900 text-white rounded-2xl p-6 mb-8 shadow-xl relative overflow-hidden border border-gla-light">
+            <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                <i class="fa-solid fa-boxes-packing text-9xl"></i>
+            </div>
+            
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div>
+                    <!-- Dynamic Welcome Header -->
+                    <div class="flex items-center space-x-2 text-yellow-400 text-xs font-semibold uppercase tracking-wider mb-1">
+                        <i class="fa-solid fa-hand-wave"></i>
+                        <span>Welcome Back</span>
+                    </div>
+                    <h2 id="welcomeStudentTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1">
+                        Welcome, Student!
+                    </h2>
+                    <p id="welcomeStudentSub" class="text-brand-100 text-xs sm:text-sm">
+                        MBA Operations & Supply Chain Management | Semester Session Progress Tracker
+                    </p>
+                </div>
+                
+                <!-- Aggregate Stats Box -->
+                <div class="flex items-center space-x-6 bg-white/10 backdrop-blur-md px-6 py-3.5 rounded-xl border border-white/15 shadow-inner">
+                    <div class="text-center">
+                        <span id="totalCoursesCount" class="block text-2xl font-bold">0</span>
+                        <span class="text-[10px] text-brand-100 uppercase font-semibold">Courses</span>
+                    </div>
+                    <div class="h-8 w-px bg-white/20"></div>
+                    <div class="text-center">
+                        <span id="completedSessionsCount" class="block text-2xl font-bold">0/0</span>
+                        <span class="text-[10px] text-brand-100 uppercase font-semibold">Sessions</span>
+                    </div>
+                    <div class="h-8 w-px bg-white/20"></div>
+                    <div class="text-center">
+                        <span id="overallPercentage" class="block text-2xl font-bold text-yellow-400">0%</span>
+                        <span class="text-[10px] text-brand-100 uppercase font-semibold">Completed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Semester Progress Bar -->
+            <div class="mt-6">
+                <div class="flex justify-between text-xs font-medium text-brand-100 mb-1.5">
+                    <span>Overall Semester Completion Rate</span>
+                    <span id="overallProgressText" class="font-bold text-yellow-400">0%</span>
+                </div>
+                <div class="w-full bg-black/30 rounded-full h-3 overflow-hidden p-0.5 border border-white/10">
+                    <div id="overallProgressBar" class="bg-gradient-to-r from-yellow-400 to-amber-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Bar: Filter Tabs & Search -->
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center space-x-2">
+                <i class="fa-solid fa-book-open text-gla font-black"></i>
+                <span>Courses for your semester</span>
+            </h3>
+
+            <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                <!-- Filter Tabs -->
+                <div class="flex bg-gray-200 dark:bg-gray-800 p-1 rounded-xl w-full sm:w-auto">
+                    <button onclick="filterCourses('all')" id="filter-all" class="filter-btn flex-1 sm:flex-initial px-4 py-2 text-xs font-semibold rounded-lg bg-white dark:bg-gray-700 shadow-sm text-brand-700 dark:text-brand-400 transition">
+                        All
+                    </button>
+                    <button onclick="filterCourses('in-progress')" id="filter-in-progress" class="filter-btn flex-1 sm:flex-initial px-4 py-2 text-xs font-semibold rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 transition">
+                        In Progress
+                    </button>
+                    <button onclick="filterCourses('completed')" id="filter-completed" class="filter-btn flex-1 sm:flex-initial px-4 py-2 text-xs font-semibold rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 transition">
+                        Completed
+                    </button>
+                </div>
+
+                <!-- Search Box -->
+                <div class="relative w-full sm:w-64">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                    <input type="text" id="searchInput" oninput="renderCourses()" placeholder="Search course or code..." class="w-full pl-9 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-xs focus:ring-2 focus:ring-gla focus:outline-none shadow-sm">
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Cards Grid -->
+        <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Dynamic Injection -->
+        </div>
+    </main>
+
+    <!-- Student Name Modal (Opens on start if not set or via edit button) -->
+    <div id="studentModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden">
+            <div class="w-16 h-16 bg-gla-dark text-yellow-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border-2 border-yellow-500 shadow-md">
+                <i class="fa-solid fa-user-graduate"></i>
+            </div>
+
+            <h3 class="text-xl font-extrabold text-center text-gray-900 dark:text-white mb-1">
+                GLA Online Student Portal
+            </h3>
+            <p class="text-xs text-center text-gray-500 dark:text-gray-400 mb-6">
+                Enter your details to personalize your MBA Operations & Supply Chain progress dashboard.
+            </p>
+
+            <form onsubmit="saveStudentProfile(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                        Student Full Name <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="inputStudentName" required placeholder="e.g. Rahul Sharma" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl text-xs focus:ring-2 focus:ring-gla focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                        Roll Number / Student ID (Optional)
+                    </label>
+                    <input type="text" id="inputStudentRoll" placeholder="e.g. 23MBAOPS102" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl text-xs focus:ring-2 focus:ring-gla focus:outline-none">
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" onclick="closeStudentModal()" id="closeStudentModalBtn" class="flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-gray-800 dark:text-gray-200 font-semibold py-2.5 text-xs rounded-xl transition hidden">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 bg-gla hover:bg-gla-dark text-white font-bold py-2.5 text-xs rounded-xl shadow-lg transition flex items-center justify-center space-x-1">
+                        <span>Save Profile</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Course Session Checklist Modal -->
+    <div id="sessionModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-100 dark:border-gray-700 overflow-hidden transform transition-all">
+            <!-- Modal Header -->
+            <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-start bg-gray-50/50 dark:bg-gray-800/50">
+                <div>
+                    <span id="modalCourseCode" class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider block mb-1">CODE100</span>
+                    <h3 id="modalCourseTitle" class="text-xl font-bold text-gray-900 dark:text-white">Course Title</h3>
+                    <p id="modalCoordinators" class="text-xs text-gray-500 dark:text-gray-400 mt-1"></p>
+                </div>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Progress Summary Bar -->
+            <div class="px-6 py-3 bg-brand-50 dark:bg-brand-950/20 border-b border-brand-100 dark:border-brand-900/30 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs font-semibold text-brand-800 dark:text-brand-300">Sessions Completed:</span>
+                    <span id="modalProgressText" class="text-xs font-bold text-brand-700 dark:text-brand-400">0 / 0</span>
+                </div>
+                <div class="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+                    <div id="modalProgressBar" class="bg-brand-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Interactive Session List -->
+            <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-2.5" id="modalSessionsList">
+                <!-- Dynamically Populated -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-xs">
+                <button onclick="toggleAllSessionsInModal(true)" class="text-brand-600 hover:text-brand-700 dark:text-brand-400 font-semibold">
+                    <i class="fa-solid fa-check-double mr-1"></i> Mark All Complete
+                </button>
+                <button onclick="toggleAllSessionsInModal(false)" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 font-semibold">
+                    <i class="fa-solid fa-square mr-1"></i> Uncheck All
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const initialCourses = [
+            {
+                id: "OEAU1006",
+                title: "Events and Updates",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Not Allocated",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-blue-600 to-indigo-700",
+                totalSessions: 8,
+                sessions: [
+                    "Session 1: GLA Institutional Announcements & Orientation",
+                    "Session 2: Industry Speaker Webinars Overview",
+                    "Session 3: Academic Calendar & GLA Event Guidelines",
+                    "Session 4: Operations Conclave Schedule",
+                    "Session 5: Supply Chain Summit Workshops",
+                    "Session 6: Certification & Badge Rules",
+                    "Session 7: Project Submissions & Updates",
+                    "Session 8: Mid-Semester Feedback & Debrief"
+                ]
+            },
+            {
+                id: "OEAU1023",
+                title: "The Edge Program",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Not Allocated",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-slate-700 to-slate-900",
+                totalSessions: 10,
+                sessions: [
+                    "Session 1: Soft Skills & Professional Etiquette",
+                    "Session 2: Resume Building & LinkedIn Strategy",
+                    "Session 3: Case Study Analysis Methodologies",
+                    "Session 4: Excel Skills for Business Analytics",
+                    "Session 5: Corporate Communication Skills",
+                    "Session 6: Mock Interview Prep & Best Practices",
+                    "Session 7: Group Discussion Techniques",
+                    "Session 8: Professional Networking Strategies",
+                    "Session 9: Personal Branding & Executive Presence",
+                    "Session 10: Final Readiness Assessment"
+                ]
+            },
+            {
+                id: "OMBA1001",
+                title: "Accounting for Managers",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Ms. Rakhi Sharma",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-blue-500 to-cyan-600",
+                totalSessions: 12,
+                sessions: [
+                    "Session 1: Introduction to Financial Accounting",
+                    "Session 2: Accounting Mechanics & Double Entry System",
+                    "Session 3: Preparation of Balance Sheet",
+                    "Session 4: Profit & Loss Statement Construction",
+                    "Session 5: Cash Flow Statement Analysis",
+                    "Session 6: Financial Ratio Analysis",
+                    "Session 7: Cost Concepts and Classifications",
+                    "Session 8: Marginal Costing & Breakeven Analysis",
+                    "Session 9: Budgeting and Budgetary Control",
+                    "Session 10: Variance Analysis for Operations",
+                    "Session 11: Inventory Valuation Techniques",
+                    "Session 12: Managerial Decision Making Cases"
+                ]
+            },
+            {
+                id: "OMBA1002",
+                title: "Contemporary Managerial Economics",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Dr. Sushmita Goswami",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-sky-600 to-blue-700",
+                totalSessions: 12,
+                sessions: [
+                    "Session 1: Demand & Supply Dynamics",
+                    "Session 2: Elasticity of Demand & Forecasting",
+                    "Session 3: Production Functions & Isoquants",
+                    "Session 4: Cost Curves in Short & Long Run",
+                    "Session 5: Perfect Competition & Monopoly",
+                    "Session 6: Oligopoly & Game Theory Principles",
+                    "Session 7: Pricing Strategies in Business",
+                    "Session 8: Macroeconomic Indicators & GDP",
+                    "Session 9: Inflation & Monetary Policy Impact",
+                    "Session 10: Global Trade & Exchange Rates",
+                    "Session 11: Business Cycles in Operations",
+                    "Session 12: Applied Economic Decision Models"
+                ]
+            },
+            {
+                id: "OMBA1003",
+                title: "Management Process and Organizational Behavior",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Ms. Shubhi Agarwal",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-cyan-600 to-teal-700",
+                totalSessions: 12,
+                sessions: [
+                    "Session 1: Principles of Management Thought",
+                    "Session 2: Planning & Strategic Alignment",
+                    "Session 3: Organizational Design & Structures",
+                    "Session 4: Personality & Perception at Work",
+                    "Session 5: Motivation Theories in Management",
+                    "Session 6: Group Dynamics & Teamwork",
+                    "Session 7: Leadership Models & Applications",
+                    "Session 8: Organizational Culture & Ethics",
+                    "Session 9: Conflict Management & Negotiation",
+                    "Session 10: Managing Organizational Change",
+                    "Session 11: Stress Management in Operations",
+                    "Session 12: Case Studies in Managerial Behavior"
+                ]
+            },
+            {
+                id: "OMBA1004",
+                title: "Business Statistics & Analytics",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Dr. Anupama Goyal",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-teal-600 to-emerald-700",
+                totalSessions: 12,
+                sessions: [
+                    "Session 1: Descriptive Statistics & Data Visualization",
+                    "Session 2: Probability Concepts & Distributions",
+                    "Session 3: Binomial & Normal Distributions",
+                    "Session 4: Sampling Techniques & Estimates",
+                    "Session 5: Hypothesis Testing & Z-Tests",
+                    "Session 6: T-Tests & ANOVA Applications",
+                    "Session 7: Chi-Square Tests",
+                    "Session 8: Simple Linear Regression Models",
+                    "Session 9: Multiple Regression Analysis",
+                    "Session 10: Time Series Forecasting for SCM",
+                    "Session 11: Predictive Analytics Applications",
+                    "Session 12: Statistical Quality Control Essentials"
+                ]
+            },
+            {
+                id: "OMBA1005",
+                title: "Marketing Management",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Dr. Sabara Ahmed",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-blue-600 to-cyan-700",
+                totalSessions: 12,
+                sessions: [
+                    "Session 1: Core Concepts of Marketing Strategy",
+                    "Session 2: STP: Segmentation, Targeting, Positioning",
+                    "Session 3: Consumer Buying Behavior Models",
+                    "Session 4: Product Life Cycle & Brand Management",
+                    "Session 5: Pricing Methods & Tactical Decisions",
+                    "Session 6: Integrated Marketing Communications",
+                    "Session 7: Distribution Channel Operations",
+                    "Session 8: Digital & Social Media Marketing",
+                    "Session 9: Services Marketing Dynamics",
+                    "Session 10: Customer Relationship Management",
+                    "Session 11: Supply Chain's Role in Fulfillment",
+                    "Session 12: Strategic Marketing Plan Projects"
+                ]
+            },
+            {
+                id: "OMBA1101",
+                title: "Managerial Aptitude-1",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Nanjani Gandhi",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-indigo-600 to-blue-700",
+                totalSessions: 10,
+                sessions: [
+                    "Session 1: Quantitative Aptitude Foundations",
+                    "Session 2: Data Interpretation Techniques",
+                    "Session 3: Logical Reasoning Patterns",
+                    "Session 4: Verbal Ability & Comprehension",
+                    "Session 5: Speed Math & Problem Solving",
+                    "Session 6: Analytical Puzzle Solving",
+                    "Session 7: Case-based Problem Solving",
+                    "Session 8: Critical Thinking Drills",
+                    "Session 9: Timed Assessment Practice",
+                    "Session 10: Aptitude Benchmark Test"
+                ]
+            },
+            {
+                id: "OMBA1102",
+                title: "Spreadsheet For Managers",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Not Allocated",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-emerald-600 to-teal-800",
+                totalSessions: 12,
+                sessions: [
+                    "Session 1: Excel Shortcuts & Interface Mastery",
+                    "Session 2: Mathematical & Lookup Functions (VLOOKUP, XLOOKUP)",
+                    "Session 3: Logical Functions (IF, AND, OR, SWITCH)",
+                    "Session 4: Data Formatting & Cleaning Rules",
+                    "Session 5: Pivot Tables & Data Aggregation",
+                    "Session 6: Interactive Dashboard Creation",
+                    "Session 7: What-If Analysis & Goal Seek",
+                    "Session 8: Solver for Optimization Problems",
+                    "Session 9: Charting & Visual Storytelling",
+                    "Session 10: Financial & Operations Modeling",
+                    "Session 11: Introduction to Macros & Automation",
+                    "Session 12: Real-World Business Spreadsheet Capstone"
+                ]
+            },
+            {
+                id: "OPSM2001",
+                title: "Supply Chain & Logistics Management",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Dr. V. K. Malhotra",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-teal-700 to-emerald-900",
+                totalSessions: 15,
+                sessions: [
+                    "Session 1: SCM Fundamentals & Drivers",
+                    "Session 2: Supply Chain Network Design",
+                    "Session 3: Bullwhip Effect & Bullwhip Reduction",
+                    "Session 4: Warehouse Location & Facility Layout",
+                    "Session 5: Transportation Planning & Routing",
+                    "Session 6: Freight Management & Fleet Optimization",
+                    "Session 7: Inventory Management & EOQ Models",
+                    "Session 8: Safety Stock & Service Levels",
+                    "Session 9: Third-Party & Fourth-Party Logistics (3PL/4PL)",
+                    "Session 10: Cold Chain & Perishable Supply Chains",
+                    "Session 11: Supply Chain Risk & Resilience",
+                    "Session 12: Sustainable & Green Supply Chains",
+                    "Session 13: Digital Supply Chain Technologies (IoT, RFID)",
+                    "Session 14: Global SCM & Customs Procedures",
+                    "Session 15: SCM Case Study & Capstone Project"
+                ]
+            },
+            {
+                id: "OPSM2002",
+                title: "Operations Planning & Control",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Prof. Rajesh Verma",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-blue-700 to-slate-800",
+                totalSessions: 14,
+                sessions: [
+                    "Session 1: Operations Strategy Formulation",
+                    "Session 2: Demand Forecasting for Manufacturing",
+                    "Session 3: Aggregate Sales & Operations Planning (S&OP)",
+                    "Session 4: Master Production Scheduling (MPS)",
+                    "Session 5: Material Requirements Planning (MRP I)",
+                    "Session 6: Manufacturing Resource Planning (MRP II) & ERP",
+                    "Session 7: Capacity Requirement Planning (CRP)",
+                    "Session 8: Shop Floor Control & Scheduling Rules",
+                    "Session 9: Theory of Constraints & Bottleneck Management",
+                    "Session 10: Lean Manufacturing Concepts & 5S",
+                    "Session 11: Just-in-Time (JIT) & Kanban Systems",
+                    "Session 12: Line Balancing & Flow Efficiency",
+                    "Session 13: Maintenance & Total Productive Maintenance (TPM)",
+                    "Session 14: Plant Simulation & Audit Case Studies"
+                ]
+            },
+            {
+                id: "OPSM2003",
+                title: "Quality Management & Six Sigma",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Dr. S. K. Gupta",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-cyan-700 to-blue-900",
+                totalSessions: 12,
+                sessions: [
+                    "Session 1: Total Quality Management (TQM) Principles",
+                    "Session 2: Quality Function Deployment (QFD)",
+                    "Session 3: Statistical Process Control (SPC) Charts",
+                    "Session 4: Process Capability Analysis (Cp & Cpk)",
+                    "Session 5: Six Sigma DMAIC Methodology",
+                    "Session 6: Define Phase Tools & Project Charters",
+                    "Session 7: Measure Phase & Measurement System Analysis (MSA)",
+                    "Session 8: Analyze Phase & Root Cause Tools (Fishbone, 5 Whys)",
+                    "Session 9: Improve Phase & Design of Experiments (DOE)",
+                    "Session 10: Control Phase & Control Plans",
+                    "Session 11: ISO 9001 Standards & Auditing",
+                    "Session 12: Green Belt Case Project Simulation"
+                ]
+            },
+            {
+                id: "OPSM2004",
+                title: "Procurement & Strategic Sourcing",
+                type: "THEORY",
+                hasDiscussion: true,
+                courseCoordinator: "Ms. Anjali Mehta",
+                programCoordinator: "Ms. Meenakshi Banga",
+                bgGradient: "from-emerald-700 to-cyan-900",
+                totalSessions: 12,
+                sessions: [
+                    "Session 1: Purchasing Cycle & Strategic Sourcing Overview",
+                    "Session 2: Supplier Evaluation & Selection Frameworks",
+                    "Session 3: Total Cost of Ownership (TCO) Analysis",
+                    "Session 4: Vendor Relationship Management (SRM)",
+                    "Session 5: Strategic Sourcing Category Management",
+                    "Session 6: E-Procurement Systems & Reverse Auctions",
+                    "Session 7: Contract Management & Legal Aspects",
+                    "Session 8: Negotiation Tactics in Procurement",
+                    "Session 9: Sustainable Sourcing & Ethical Purchasing",
+                    "Session 10: Global Sourcing & Import Documentation",
+                    "Session 11: Supply Risk Assessment in Sourcing",
+                    "Session 12: Sourcing Strategy Capstone Simulation"
+                ]
+            }
+        ];
+
+        const STORAGE_KEY = 'gla_mba_ops_dashboard_data_v2';
+        const STUDENT_KEY = 'gla_mba_student_profile';
+
+        let coursesData = [];
+        let currentFilter = 'all';
+        let activeModalCourseId = null;
+        let studentProfile = { name: '', roll: '' };
+
+        function loadStudentProfile() {
+            const saved = localStorage.getItem(STUDENT_KEY);
+            if (saved) {
+                try {
+                    studentProfile = JSON.parse(saved);
+                } catch(e) {
+                    studentProfile = { name: 'Student', roll: '' };
+                }
+            }
+
+            if (!studentProfile.name) {
+                document.getElementById('closeStudentModalBtn').classList.add('hidden');
+                openStudentModal();
+            } else {
+                document.getElementById('closeStudentModalBtn').classList.remove('hidden');
+                updateStudentDisplay();
+            }
+        }
+
+        function openStudentModal() {
+            document.getElementById('inputStudentName').value = studentProfile.name || '';
+            document.getElementById('inputStudentRoll').value = studentProfile.roll || '';
+            document.getElementById('studentModal').classList.remove('hidden');
+        }
+
+        function closeStudentModal() {
+            if (studentProfile.name) {
+                document.getElementById('studentModal').classList.add('hidden');
+            }
+        }
+
+        function saveStudentProfile(event) {
+            event.preventDefault();
+            const name = document.getElementById('inputStudentName').value.trim();
+            const roll = document.getElementById('inputStudentRoll').value.trim();
+
+            if (!name) return;
+
+            studentProfile = { name, roll };
+            localStorage.setItem(STUDENT_KEY, JSON.stringify(studentProfile));
+            
+            document.getElementById('closeStudentModalBtn').classList.remove('hidden');
+            document.getElementById('studentModal').classList.add('hidden');
+            updateStudentDisplay();
+        }
+
+        function updateStudentDisplay() {
+            const nameDisplay = studentProfile.name || 'Student';
+            const rollDisplay = studentProfile.roll ? `(${studentProfile.roll})` : '';
+
+            document.getElementById('headerStudentName').innerText = nameDisplay;
+            document.getElementById('welcomeStudentTitle').innerText = `Welcome, ${nameDisplay}!`;
+            document.getElementById('welcomeStudentSub').innerText = `MBA Operations & Supply Chain Management ${rollDisplay} | Progress Tracker`;
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    coursesData = JSON.parse(saved);
+                } catch (e) {
+                    coursesData = initialCourses;
+                    saveData();
+                }
+            } else {
+                coursesData = initialCourses;
+                saveData();
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(coursesData));
+            updateGlobalStats();
+        }
+
+        function updateGlobalStats() {
+            let totalSessionsSum = 0;
+            let completedSessionsSum = 0;
+
+            coursesData.forEach(course => {
+                totalSessionsSum += course.sessions.length;
+                const completedInCourse = course.completedSessions ? course.completedSessions.length : 0;
+                completedSessionsSum += completedInCourse;
+            });
+
+            const overallPct = totalSessionsSum > 0 ? Math.round((completedSessionsSum / totalSessionsSum) * 100) : 0;
+
+            document.getElementById('totalCoursesCount').innerText = coursesData.length;
+            document.getElementById('completedSessionsCount').innerText = `${completedSessionsSum}/${totalSessionsSum}`;
+            document.getElementById('overallPercentage').innerText = `${overallPct}%`;
+            document.getElementById('overallProgressText').innerText = `${overallPct}% Completed`;
+            document.getElementById('overallProgressBar').style.width = `${overallPct}%`;
+        }
+
+        function filterCourses(type) {
+            currentFilter = type;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'dark:bg-gray-700', 'shadow-sm', 'text-brand-700', 'dark:text-brand-400');
+                btn.classList.add('text-gray-600', 'dark:text-gray-400');
+            });
+            
+            const activeBtn = document.getElementById(`filter-${type}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-white', 'dark:bg-gray-700', 'shadow-sm', 'text-brand-700', 'dark:text-brand-400');
+                activeBtn.classList.remove('text-gray-600', 'dark:text-gray-400');
+            }
+
+            renderCourses();
+        }
+
+        function renderCourses() {
+            const grid = document.getElementById('coursesGrid');
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filteredCourses = coursesData.filter(course => {
+                const matchesSearch = course.title.toLowerCase().includes(searchQuery) || course.id.toLowerCase().includes(searchQuery);
+                
+                const completedCount = course.completedSessions ? course.completedSessions.length : 0;
+                const isCompleted = completedCount === course.sessions.length;
+                
+                if (currentFilter === 'completed') return matchesSearch && isCompleted;
+                if (currentFilter === 'in-progress') return matchesSearch && !isCompleted;
+                return matchesSearch;
+            });
+
+            if (filteredCourses.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white dark:bg-gray-800 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700">
+                        <i class="fa-solid fa-folder-open text-4xl text-gray-400 mb-3"></i>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">No courses match your search/filter criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredCourses.forEach(course => {
+                const completedCount = course.completedSessions ? course.completedSessions.length : 0;
+                const totalCount = course.sessions.length;
+                const pct = Math.round((completedCount / totalCount) * 100);
+
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col group";
+
+                card.innerHTML = `
+                    <div class="relative h-36 bg-gradient-to-r ${course.bgGradient} p-4 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                        <div class="relative z-10 flex justify-between items-center">
+                            <span class="bg-white/90 text-gray-800 text-[10px] font-bold px-2 py-0.5 rounded tracking-wide uppercase">
+                                ${course.type}
+                            </span>
+                            ${course.hasDiscussion ? `
+                                <span class="bg-black/40 backdrop-blur-md text-white text-[10px] px-2 py-0.5 rounded-full flex items-center space-x-1">
+                                    <i class="fa-solid fa-comments text-[9px]"></i>
+                                    <span>Discussion</span>
+                                </span>
+                            ` : ''}
+                        </div>
+                        <div class="relative z-10 flex items-center justify-center">
+                            <i class="fa-solid fa-laptop-code text-white/30 text-5xl group-hover:scale-110 transition duration-300"></i>
+                        </div>
+                    </div>
+
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-[11px] font-bold text-gray-400 mb-1">
+                                <i class="fa-solid fa-code text-[10px]"></i>
+                                <span>${course.id}</span>
+                            </div>
+                            <h3 class="font-bold text-sm text-gray-900 dark:text-white line-clamp-2 leading-snug">
+                                ${course.title}
+                            </h3>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center text-[11px] font-medium text-gray-500 dark:text-gray-400 mb-1">
+                                <span>Progress</span>
+                                <span class="font-semibold text-brand-600 dark:text-brand-400">${completedCount}/${totalCount} Sessions (${pct}%)</span>
+                            </div>
+                            <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-brand-600 h-1.5 rounded-full transition-all duration-300" style="width: ${pct}%"></div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 text-[11px] bg-gray-50 dark:bg-gray-700/40 p-2.5 rounded-xl border border-gray-100 dark:border-gray-700/50">
+                            <div class="flex items-center justify-between text-gray-600 dark:text-gray-300">
+                                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">COURSE COORDINATOR</span>
+                                <span class="font-medium text-gray-800 dark:text-gray-200 truncate max-w-[130px]" title="${course.courseCoordinator}">
+                                    <i class="fa-solid fa-user-tie text-gla mr-1"></i>${course.courseCoordinator}
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between text-gray-600 dark:text-gray-300">
+                                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">PROGRAM COORDINATOR</span>
+                                <span class="font-medium text-gray-800 dark:text-gray-200 truncate max-w-[130px]" title="${course.programCoordinator}">
+                                    <i class="fa-solid fa-user-gear text-teal-600 mr-1"></i>${course.programCoordinator}
+                                </span>
+                            </div>
+                        </div>
+
+                        <button onclick="openCourseModal('${course.id}')" class="w-full bg-gla hover:bg-gla-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 transition shadow-sm">
+                            <span>Explore Course →</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openCourseModal(courseId) {
+            activeModalCourseId = courseId;
+            const course = coursesData.find(c => c.id === courseId);
+            if (!course) return;
+
+            document.getElementById('modalCourseCode').innerText = course.id;
+            document.getElementById('modalCourseTitle').innerText = course.title;
+            document.getElementById('modalCoordinators').innerText = `Course Coordinator: ${course.courseCoordinator} | Program: ${course.programCoordinator}`;
+
+            renderModalSessions();
+            document.getElementById('sessionModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('sessionModal').classList.add('hidden');
+            activeModalCourseId = null;
+        }
+
+        function renderModalSessions() {
+            const course = coursesData.find(c => c.id === activeModalCourseId);
+            if (!course) return;
+
+            if (!course.completedSessions) course.completedSessions = [];
+
+            const sessionsList = document.getElementById('modalSessionsList');
+            sessionsList.innerHTML = '';
+
+            const completedCount = course.completedSessions.length;
+            const totalCount = course.sessions.length;
+            const pct = Math.round((completedCount / totalCount) * 100);
+
+            document.getElementById('modalProgressText').innerText = `${completedCount} / ${totalCount} (${pct}%)`;
+            document.getElementById('modalProgressBar').style.width = `${pct}%`;
+
+            course.sessions.forEach((sessionTitle, index) => {
+                const isCompleted = course.completedSessions.includes(index);
+
+                const item = document.createElement('div');
+                item.onclick = () => toggleSession(index);
+                item.className = `p-3 rounded-xl border flex items-center justify-between cursor-pointer transition ${
+                    isCompleted 
+                    ? 'bg-brand-50/80 border-brand-200 text-brand-900 dark:bg-brand-950/30 dark:border-brand-800 dark:text-brand-200' 
+                    : 'bg-white border-gray-200 hover:bg-gray-50 dark:bg-gray-700/50 dark:border-gray-600 dark:hover:bg-gray-700'
+                }`;
+
+                item.innerHTML = `
+                    <div class="flex items-center space-x-3 pr-2">
+                        <div class="w-5 h-5 rounded flex items-center justify-center border ${
+                            isCompleted 
+                            ? 'bg-brand-600 border-brand-600 text-white' 
+                            : 'border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-800'
+                        }">
+                            ${isCompleted ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                        </div>
+                        <span class="text-xs font-medium ${isCompleted ? 'line-through opacity-80' : ''}">${sessionTitle}</span>
+                    </div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        isCompleted 
+                        ? 'bg-brand-200 text-brand-800 dark:bg-brand-900 dark:text-brand-300' 
+                        : 'bg-gray-100 text-gray-500 dark:bg-gray-600 dark:text-gray-300'
+                    }">
+                        ${isCompleted ? 'Completed' : 'Pending'}
+                    </span>
+                `;
+                sessionsList.appendChild(item);
+            });
+        }
+
+        function toggleSession(sessionIndex) {
+            const course = coursesData.find(c => c.id === activeModalCourseId);
+            if (!course) return;
+
+            if (!course.completedSessions) course.completedSessions = [];
+
+            const idx = course.completedSessions.indexOf(sessionIndex);
+            if (idx > -1) {
+                course.completedSessions.splice(idx, 1);
+            } else {
+                course.completedSessions.push(sessionIndex);
+            }
+
+            saveData();
+            renderModalSessions();
+            renderCourses();
+        }
+
+        function toggleAllSessionsInModal(markComplete) {
+            const course = coursesData.find(c => c.id === activeModalCourseId);
+            if (!course) return;
+
+            if (markComplete) {
+                course.completedSessions = course.sessions.map((_, idx) => idx);
+            } else {
+                course.completedSessions = [];
+            }
+
+            saveData();
+            renderModalSessions();
+            renderCourses();
+        }
+
+        function resetAllProgress() {
+            if (confirm("Are you sure you want to reset all session completion data?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                loadSavedData();
+                renderCourses();
+                if (activeModalCourseId) renderModalSessions();
+            }
+        }
+
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'dark_off');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+        });
+
+        window.onload = function() {
+            initTheme();
+            loadSavedData();
+            loadStudentProfile();
+            renderCourses();
+        };
+    </script>
+</body>
+</html>
